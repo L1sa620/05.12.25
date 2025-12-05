@@ -8,14 +8,14 @@ namespace topit{
   struct f_t {
     p_t aa, bb;
   };
-  struct Idraw{
+  struct IDraw{
     virtual ~IDraw() = default;
     virtual p_t begin() const = 0;
     virtual p_t next(p_t) const = 0;
   };
-  struct Dot: Idraw{
+  struct Dot: IDraw{
     Dot(int x, int y);
-  explicit Dot(p_t dd)
+    explicit Dot(p_t dd)
     p_t begin() const override;
     p_t next(p_t) const override;
     p_t d;
@@ -24,15 +24,17 @@ namespace topit{
 
 int main()
 {
-  using topit::p_t;
-  p_t a{1,0}, b{1,0};
-  std::cout << (a != b) << "\n";
+  using topit::Dot;
 
   return 0;
 }
+  topit::Dot::Dot(p_t dd):
+    IDraw(),
+    d{dd}
+    {}
 
-  topit::Dot(int x, int y):
-    Idraw(),
+  topit::Dot::Dot(int x, int y):
+    IDraw(),
     d{x,y}
     {}
 
@@ -52,3 +54,9 @@ int main()
   bool topit::operator!=(p_t a, p_t b){
     return !(a == b);
   }
+
+    //IDraw * p = new Dot(10, 10);
+  //IDraw * pp = new Dot(p_t(10, 10);
+
+  //p_t a{1,0}, b{1,0};
+  //std::cout << (a != b) << "\n";
