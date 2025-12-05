@@ -8,6 +8,15 @@ namespace topit{
   struct f_t {
   p_t aa, bb;
   };
+  struct Idraw{
+    virtual ~IDraw() = default;
+    virtual p_t begin() const = 0;
+    virtual p_t next(p_t) const = 0;
+  };
+  struct Dot: Idraw{
+  p_t begin() const override;
+  p_t next(p_t) const override;
+  };
 }
 int main()
 {
