@@ -19,6 +19,8 @@ namespace topit{
     p_t begin() const override;
     p_t next(p_t) const override;
     p_t d;
+    size_t points(const IDraw& d, p_t** pts, size_t s);
+    f_t frame(const p_t* pts, size_t s);
   };
 }
 
@@ -26,26 +28,34 @@ int main()
 {
   using topit::IDraw;
   using topit::Dot;
+  using topit::f_t;
+  int err = 0;
+  p_t * pts = nullptr;
   IDraw* shps[3] = {};
   try {
     shps[0] = new Dot(0,0);
     shps[0] = new Dot(5,7);
     shps[0] = new Dot(-5,-2);
-  // todd
+  // todo
+  for (size_t i = 0; i < 3; ++i)
+  {
+    s += points(*(shps[i]), &pts, s);
+  }
+  f_t fr = frame();
 // достать все точки из фигур
-//посчитать ограничивающий прямоугольник 
+//посчитать ограничивающий прямоугольник
 //подготовить полотно нужного размера
-//заполнить полотно 
+//заполнить полотно
 //нарисовать полотно на экран
  } catch(...) {
     err = 2;
     std::cerr << "Bad drawing\n";
   }
+  delete [] pts;
   delete shps[0];
   delete shps[1];
   delete shps[2];
-
-  return 0;
+  return err;
 }
   topit::Dot::Dot(p_t dd):
     IDraw(),
