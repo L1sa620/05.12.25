@@ -28,6 +28,16 @@ namespace topit
     p_t next(p_t) const override;
     p_t d;
   };
+  struct HLine: IDraw
+  {
+    HLine(int x, int y, int length);
+
+    p_t begin() const override;
+    p_t next(p_t) const override;
+
+    p_t start;
+    int len;
+  };
   size_t points(const IDraw& d, p_t** pts, size_t s);
   f_t frame(const p_t* pts, size_t s);
   char* canvas(f_t fr, char fill);
@@ -46,7 +56,7 @@ int main()
   {
     shps[0] = new Dot(0, 0);
     shps[1] = new Dot(5, 7);
-    shps[2] = new Dot(-5, 2);
+    shps[2] = new HLine(0, 3, 6);  
     for (size_t i = 0; i < 3; ++i)
     {
       s += points(*(shps[i]), &pts, s);
@@ -93,6 +103,15 @@ topit::p_t topit::Dot::next(p_t prev) const
   }
   return d;
 }
+topit::HLine::HLine(int x, int y, int length):
+  IDraw(),
+  start{x, y},
+  len{length}
+{}
+topit::p_t topit::HLine::begin() const
+{
+  return start;
+}
 bool topit::operator==(p_t a, p_t b)
 {
   return a.x == b.x && a.y == b.y;
@@ -101,29 +120,33 @@ bool topit::operator!=(p_t a, p_t b)
 {
   return !(a == b);
 }
+topit::p_t topit::HLine::next(p_t prev) const
+{
+  if (prev.x < start.x + len - 1)
+  {
+    return p_t{prev.x + 1, prev.y};
+  }
+  return prev; 
+}
 size_t topit::points(const IDraw& d, p_t** pts, size_t s)
 {
   // TODO
   return 0;
 }
-
 topit::f_t topit::frame(const p_t* pts, size_t s)
 {
   // TODO
   return f_t{{0, 0}, {0, 0}};
 }
-
 char* topit::canvas(f_t fr, char fill)
 {
   // TODO
   return nullptr;
 }
-
 void topit::paint(char* cnv, f_t fr, p_t p, char fill)
 {
   // TODO
 }
-
 void topit::flush(std::ostream& os, const char* cnv, f_t fr)
 {
   // TODO
