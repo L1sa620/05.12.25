@@ -24,7 +24,26 @@ namespace topit{
 
 int main()
 {
+  using topit::IDraw;
   using topit::Dot;
+  IDraw* shps[3] = {};
+  try {
+    shps[0] = new Dot(0,0);
+    shps[0] = new Dot(5,7);
+    shps[0] = new Dot(-5,-2);
+  // todd
+// достать все точки из фигур
+//посчитать ограничивающий прямоугольник 
+//подготовить полотно нужного размера
+//заполнить полотно 
+//нарисовать полотно на экран
+ } catch(...) {
+    err = 2;
+    std::cerr << "Bad drawing\n";
+  }
+  delete shps[0];
+  delete shps[1];
+  delete shps[2];
 
   return 0;
 }
