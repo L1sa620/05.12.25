@@ -21,6 +21,9 @@ namespace topit{
     p_t d;
     size_t points(const IDraw& d, p_t** pts, size_t s);
     f_t frame(const p_t* pts, size_t s);
+    char * canvas(f_t fr, chat fill);
+    void paint(char * cnv, f_t fr, p_t p, char fill);
+
   };
 }
 
@@ -41,12 +44,14 @@ int main()
   {
     s += points(*(shps[i]), &pts, s);
   }
-  f_t fr = frame();
-// достать все точки из фигур
-//посчитать ограничивающий прямоугольник
-//подготовить полотно нужного размера
-//заполнить полотно
+  f_t fr = frame(pts, s);
+  char * cnv = canvas(fr, '.');
+  fot (size_t i = 0; i < s; ++i)
+  {
+  paint(cnv, ft, pts[i], '#');
+  }
 //нарисовать полотно на экран
+  delete [] cnv;
  } catch(...) {
     err = 2;
     std::cerr << "Bad drawing\n";
