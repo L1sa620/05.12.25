@@ -23,7 +23,7 @@ namespace topit{
     f_t frame(const p_t* pts, size_t s);
     char * canvas(f_t fr, chat fill);
     void paint(char * cnv, f_t fr, p_t p, char fill);
-
+    void fluch(std::ostream& os, const char *, f_t ft);
   };
 }
 
@@ -32,6 +32,7 @@ int main()
   using topit::IDraw;
   using topit::Dot;
   using topit::f_t;
+  using topit::p_t;
   int err = 0;
   p_t * pts = nullptr;
   IDraw* shps[3] = {};
@@ -39,7 +40,6 @@ int main()
     shps[0] = new Dot(0,0);
     shps[0] = new Dot(5,7);
     shps[0] = new Dot(-5,-2);
-  // todo
   for (size_t i = 0; i < 3; ++i)
   {
     s += points(*(shps[i]), &pts, s);
@@ -50,7 +50,7 @@ int main()
   {
   paint(cnv, ft, pts[i], '#');
   }
-//нарисовать полотно на экран
+  flush(std::cout, cnv, ft);
   delete [] cnv;
  } catch(...) {
     err = 2;
